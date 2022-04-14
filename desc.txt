@@ -1,0 +1,33 @@
+EP 1 :
+Domain ve application katmanlarý core klasörü içerisinde oluþturulur, bu tanýmlama bir nevi gelenek haline gelmiþtir.
+Core/Application katmaný Domain katmanýný referans eder
+Domain içinde genel olarak Entities yapýlarý, base class lar gibi obje tanýmlamalarý bulunur
+Application genelinde iþ emirleri, soyut nesneler bulunmaktadýr
+Servislerin oluþturulduðu katman olan infrastructure ve persistance katmanlarýnda Infrastructure klasörü içerisinde tanýmlanýr.
+Infrastructure/Persistence & Infrastructure Application katmanýnýn referans eder
+Application katmanýnda bulunana soyut nesnelerin somut versiyonu infrastructure da bulunur yapýlan iþleme göre Persistence veya Infrastructure'da bulunabilir.
+Presentation uygulamalarý ise presentation klasörü içerisinde tanýmlanýr. Presentation uygulamalarý class library den ziyade console,web api vs. olabilir
+Presentation katmaný aslýnda persistence ve Infrastructure katmaný ile yatay katmanlardýr ama presentation katmaný yatay baðlý olduðu katmanlarý refere edebilir.
+Bunun dýþýnda presentation katmaný Aplication katmanýný refere eder.
+Presentation katmaný verilerin sistemden çýkýþ yaptýðý katmandýr
+Presentation katmaný üzerinde verileri transferleri için IoC konteyner yapýsý ile etkiliþim saðlanmýþtýr.
+Infrastructure\Persistence  katmaný üzerinde tanýmlanan ServiceRegistration dosyasýnda IoC konteynerýna gerekli atamalar gerçekleþtiriliyor.
+Burada IProductService nesnesine gelen istek üzerine IoC konteynerýndan ProductServis nesnesine dönmesiyle birlikte eriþim somut olan iþleme eriþim saðlanmaktadýr.
+EP 2 :
+Proje dahilinde CodeFirst yaklaþýmý benimsenmiþ olup Buna uygun tanýmlar yapýlmýdý.
+Core\Domain\Entities yolunda veri tabaný entity nesnelerimiz tanýmlanmýdý. Ayný zamanda BaseEntity yaratýlarak nesnelerin ortak özellikleri kalýtým almasý saðlanmýþtýr.
+Nesneler arasýndaki iliþkiler (1-1/1-n/n-n) tanýmlanmýþtýr.
+EntityFrameWork için gerekli olan DbContext Nesnesi Persistence katmanýnda oluþturulmuþtur.
+Model nesnelerimiz üzerinden migration oluþturarak veri tabanýna aktarýlmak için uygun hale getirildi.
+Reflection ile veri tabaný tablolarýmýz ve iliþkileri oluþturuldu.
+Microsoft.EntityFrameworkCore.Desing (StartUp Projesine dahil edilir. Migration ve Reflectio için gereklidir.)
+Npsql.EntityFrameworkCore.PostgreSql (Persistence katmanýnda DbContext nesnesi için gerekli dönüþüm ve ayarlamalar için provider görevi görür.)
+EntityFrameworkCore.Tools (Persistence & Apllication katmanýna EntityFrameWork üzerinde çalýþmak için eklenmiþtir).
+EP 3 :
+Repository Desin pattern'da önce arayüzler(soyut/Application) ardýndan concrete(somutu/Persistence) oluþturulur.
+Genel yapýlanmada Irepository yapýsý "Solid" prensiplerine aykýrý olduðu genel olarak savunulmaktadýr.
+Sebep olarak Veri tabaný iþlemleri her ne kadar tek bir yapý üzerinde çalýþsada, çalýþma prensipleri birbirinden farklýdýr.
+Solid kurallarýna uymasý amacýyla bunlarý Okuma ve Yazma iþlemleri olarak bölebiliriz bu sayede prensip olarak iþlemleri gruplamýþ oluruz.
+Gerekli repository'ler oluþturturuldu ve IoC konteyner'e gerekli þekilde bildirilmiþtir.
+kontrol amaçlý Product Controller Api üzerinden veri tabanýna veri ekleme iþlemi yapýlmýþtýr.
+
