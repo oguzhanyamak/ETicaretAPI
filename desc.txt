@@ -30,4 +30,13 @@ Sebep olarak Veri tabaný iþlemleri her ne kadar tek bir yapý üzerinde çalýþsada,
 Solid kurallarýna uymasý amacýyla bunlarý Okuma ve Yazma iþlemleri olarak bölebiliriz bu sayede prensip olarak iþlemleri gruplamýþ oluruz.
 Gerekli repository'ler oluþturturuldu ve IoC konteyner'e gerekli þekilde bildirilmiþtir.
 kontrol amaçlý Product Controller Api üzerinden veri tabanýna veri ekleme iþlemi yapýlmýþtýr.
-
+EP 4 :
+Ef Core Tracking
+Bu sýnýfýn görevi; DbContext kullanýlarak alýnan bütün objeleri kapsamýnýn (scope) dýþýna çýkýncaya kadar izlemektir.
+Standart bir senaryoda, default olarak, Entity Framework aracýlýðýyla bir veritabanýndan seçilen tüm varlýklar yukarýda anlattýðýmýz gibi izlenir. 
+“Ýzleme” kelimesinden kastýmýz, contextimizin izlenen nesneyi gözlemlediði ve üzerinde herhangi bir deðiþiklik yapýlýp yapýlmadýðýný bildiðidir. 
+Bu izleme sonucunda SaveChanges() metodu çalýþtýðýnda, nesne üzerinde bir deðiþiklik varsa veritabanýna yansýtýlýr.
+Sonuçlarýn read-only olduðu senaryolarda, daha açmak gerekirse, veritabanýnda hiçbir deðiþiklik yaratmayacak ve sadece okuma iþlemi yapacaðýmýz senaryolarda aþýrý kullanýþlý olan sorgu tipidir. 
+Çünkü herhangi bir deðiþiklik olmadýðý için daha hýzlý sonuç verecektir.
+Bundan dolayý veritabanýndan aldýðýnýz bir veriyi güncellemeniz gerekmiyorsa, izleme gerektirmeyen bir sorgu kullanmanýz performans açýsýndan da daha faydalý olacaktýr.
+Bu bilgiler ýþýðýnda Projede bulunan ReadRepository genelinde sadece okuma iþlemi yapýldýðýndan Tracking iþlemi kapatýlarak optimizasyon saðlandý.
