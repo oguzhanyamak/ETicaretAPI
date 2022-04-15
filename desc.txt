@@ -40,3 +40,7 @@ Sonuçlarýn read-only olduðu senaryolarda, daha açmak gerekirse, veritabanýnda hi
 Çünkü herhangi bir deðiþiklik olmadýðý için daha hýzlý sonuç verecektir.
 Bundan dolayý veritabanýndan aldýðýnýz bir veriyi güncellemeniz gerekmiyorsa, izleme gerektirmeyen bir sorgu kullanmanýz performans açýsýndan da daha faydalý olacaktýr.
 Bu bilgiler ýþýðýnda Projede bulunan ReadRepository genelinde sadece okuma iþlemi yapýldýðýndan Tracking iþlemi kapatýlarak optimizasyon saðlandý.
+EP 5 :
+Bu bölümde global ortak deðiþkenleri tanýmlama esnasýnda deðilde veri tabanýna eklemne esnasýnda atama iþlemi için Interceptor iþlemi
+uygulanmýþtýr.Bunun için SaveChanges methodu DbContext sýnýfýnda override edilerek araya girip gerekli atamalarý yapýp ardýndan
+SaveChanges methodu ile gerekli yansýtma iþleminin yapýlmasý saðlanmýþtýr.

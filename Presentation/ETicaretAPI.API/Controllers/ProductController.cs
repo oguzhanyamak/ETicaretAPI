@@ -23,9 +23,7 @@ namespace ETicaretAPI.API.Controllers
         {
             await _productWriteRepository.AddRangeAsync(new()
             {
-                new() { Id = Guid.NewGuid(), Name = "Product1", Price = 100, CreateDate = DateTime.UtcNow, Stock = 10 },
-                new() { Id = Guid.NewGuid(), Name = "Product2", Price = 200, CreateDate = DateTime.UtcNow, Stock = 10 },
-                new() { Id = Guid.NewGuid(), Name = "Product3", Price = 300, CreateDate = DateTime.UtcNow, Stock = 10 },
+                new() { Id = Guid.NewGuid(), Name = "Product123", Price = 100, Stock = 10 },     
             });
             await _productWriteRepository.SaveAsync();
         }
