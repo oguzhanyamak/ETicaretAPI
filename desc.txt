@@ -44,3 +44,11 @@ EP 5 :
 Bu bölümde global ortak deðiþkenleri tanýmlama esnasýnda deðilde veri tabanýna eklemne esnasýnda atama iþlemi için Interceptor iþlemi
 uygulanmýþtýr.Bunun için SaveChanges methodu DbContext sýnýfýnda override edilerek araya girip gerekli atamalarý yapýp ardýndan
 SaveChanges methodu ile gerekli yansýtma iþleminin yapýlmasý saðlanmýþtýr.
+EP 6 :
+Geliþtirilen uygulamalarda client olarak Browser kullanýldýðý durumda CORS politikalarý devreye girmektedir.
+Same Origin Policy (SOP)
+SOP, tarayýcýlar (browser) tarafýndan yüklenen kaynaklarýnýn, birbirleriyle olan paylaþýmlarýný/iliþkilerini belirli kurallar çerçevesinde kýsýtlayan bir politikadýr. 
+Tarayýcýlar tarafýndan, geliþtirilen bir güvenlik mekanizmasýdýr. sadece ayný origine sahip kaynaklar birbirleri ile paylaþýma geçebilmektedir.
+Eðer, SOP kýsýtlamasý olmasaydý, zararlý bir sayfayý ziyaret ettiðimizde, o an oturumumuzun açýk olduðu bir sayfadaki bilgilerimizin okunabilmesine izin verilecekti.
+Uygulamalarýn, farklý originler (alt alan adlarý veya üçüncü taraf kaynaklar) ile etkiletiþime geçme ihtiyacý nedeniyle CORS, SOP’un getirmiþ olduðu katý kurallarý, 
+kontrollü bir þekilde hafifletmek için kullanýlmaktadýr.
