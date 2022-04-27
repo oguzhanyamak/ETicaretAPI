@@ -52,3 +52,9 @@ Tarayýcýlar tarafýndan, geliþtirilen bir güvenlik mekanizmasýdýr. sadece ayný or
 Eðer, SOP kýsýtlamasý olmasaydý, zararlý bir sayfayý ziyaret ettiðimizde, o an oturumumuzun açýk olduðu bir sayfadaki bilgilerimizin okunabilmesine izin verilecekti.
 Uygulamalarýn, farklý originler (alt alan adlarý veya üçüncü taraf kaynaklar) ile etkiletiþime geçme ihtiyacý nedeniyle CORS, SOP’un getirmiþ olduðu katý kurallarý, 
 kontrollü bir þekilde hafifletmek için kullanýlmaktadýr.
+EP 7: 
+Product Controller'ýn düzenlenmesi.
+Dýþ dünyadan gelen verilerin karþýlanmasý için ViewModel'lar oluþturulmuþtur.CORE/APPLICATION/ViewModewls
+Dýþ dünyadan gelen veriler Entity ile karþýlanmamalýdýr.
+Api istekleri için product controller'ýn düzenlenmesi
+
