@@ -66,3 +66,9 @@ Fluent Validation için Application katmanýna FluentValidation paketinin yüklenme
 Oluþturulan validatorlar uygulamanýn sunum katmanýna bildirilir. [Presentation/ETicaretAPI.API/Program.cs]
 { ConfigureApiBehaviorOptions(options=> options.SuppressModelStateInvalidFilter=true) } ile varsayýlan filteler devre dýþý býrakýlýr. 
 { options => options.Filters.Add<ValidationFilter>() } ile özel filtre tanýmý yapýlabilir. Özel filtre bir middleware dýr.
+EP 9 :
+Dosya yükleme iþlemleri için öncelikle Application katmanýnda IFileService arayüzü oluþturularak ön tanýmlar oluþturulmuþtur.
+Ardýndan oluþturulan sýnýfýn concreate nesnesi Infrastructure da tanýmlanmýþtýr.
+ardýndan Infrastructure katmanýnda bir serviceRegistiration yazýlarak IFileService ile FileService IoC yapýsýnda eþleþtirilmiþtir.
+oluþturulan serviceRegistiration Sunum katmanýnda bulunan IoC konteyner yapýsýnda tanýmlanarak eklenmesi saðlanmýþtýr.
+ProductController özelinde simüle edildi.
