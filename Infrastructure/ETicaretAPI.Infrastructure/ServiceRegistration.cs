@@ -13,7 +13,7 @@ namespace ETicaretAPI.Infrastructure
     {
         public static void AddInfrastructureServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IFileService, FileServices>();
+            serviceCollection.AddScoped<IFileService, FileService>();
         }
     }
 }
