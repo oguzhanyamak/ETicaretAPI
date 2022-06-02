@@ -72,3 +72,8 @@ Ardýndan oluþturulan sýnýfýn concreate(somut) nesnesi Infrastructure da tanýmlan
 ardýndan Infrastructure katmanýnda bir serviceRegistiration yazýlarak IFileService ile FileService IoC yapýsýnda eþleþtirilmiþtir.
 oluþturulan serviceRegistiration Sunum katmanýnda bulunan IoC konteyner yapýsýnda tanýmlanarak eklenmesi saðlanmýþtýr.
 ProductController özelinde simüle edildi.
+----------------------------------------------------------------
+EP 10:
+EF Core Table Per Hierachy
+Konu anlaþýldýðýnda gerekli açýklama eklenecektir.
+----------------------------------------------------------------
