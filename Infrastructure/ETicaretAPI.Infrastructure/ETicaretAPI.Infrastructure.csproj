@@ -10,4 +10,10 @@
     <ProjectReference Include="..\..\Core\ETicaretAPI.Application\ETicaretAPI.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+    <Folder Include="Services\Storage\AWS\" />
+    <Folder Include="Services\Storage\Azure\" />
+  </ItemGroup>
+
 </Project>

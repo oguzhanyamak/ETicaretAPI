@@ -75,5 +75,16 @@ ProductController özelinde simüle edildi.
 ----------------------------------------------------------------
 EP 10:
 EF Core Table Per Hierachy
-Konu anlaþýldýðýnda gerekli açýklama eklenecektir.
+Veritabanýndaki bir tablo EF Core tarafýnda birden fazla entity’nin bütünsel haline karþýlýk gelmektedir diyebiliriz.
+Bu davranýþta ise hiyerarþi içindeki tüm entity’ler için tek bir tablo oluþturulmakta ve bu tabloda veriler tutulurken ortak olan yani base class’dan gelen alanlar doldurulmakta,
+Hal böyleyken gelecek olan verinin hangi entity’e özel olduðunu ayrýþtýrabilmek için EF Core tarafýndan eklenen Discriminator kolonunu görmekteyiz.
+Bu kolonda gelen verinin hangi entity tarafýndan kayýt edildiðine dair bilgi tutulacaktýr.
+/Konu anlaþýldýðýnda gerekli açýklama eklenecektir./
 ----------------------------------------------------------------
+EP 11:
+Dosya Yönetimi için Storage altyapýsý
+Dosya kayýt iþlemi ilerleyen zamanlarda esnetilmesi gerekebilir.
+Birden fazla kayýt yeri ve türü olabilecektir.(AWS/Azure/Local)
+Akýþ Þematiði Grafiði
+https://miro.com/app/board/uXjVOvEHh5k=/?share_link_id=554583442249
+-----------------------------------------------------------------
