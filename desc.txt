@@ -88,3 +88,9 @@ Birden fazla kayýt yeri ve türü olabilecektir.(AWS/Azure/Local)
 Akýþ Þematiði Grafiði
 https://miro.com/app/board/uXjVOvEHh5k=/?share_link_id=554583442249
 -----------------------------------------------------------------
+EP 11.5:
+Dosya kayýt iþlemi sýrasýnda isimlendirme standartlarý bütün kayýt iþlemleri için ortak bir iþlem olmaktadýr FileRename iþlevi isimlendirme iþlemini yapmaktadýr.
+FileRename IStorage interface de tanýmlamak mantýklý deðildir çünkü bu interface'i implemente eden yerlerde bu methodun
+ayrý ayrý tanýmlanmasý gerekmektedir ama bu çalýþmada FileRename her Storage türü için ortak olduðundan buna gerek yoktur.
+Bu nedenle Storage ana sýnýfý içerisinde tanýmlanýp diðer storage türlerine kalýtým yoluyla aktarmak daha mantýklý olacaktýr.
+----------------------------------------------------------------
