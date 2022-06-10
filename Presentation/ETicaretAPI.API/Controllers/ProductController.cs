@@ -1,8 +1,11 @@
 ﻿using ETicaretAPI.Application.Abstractions.Storage;
+using ETicaretAPI.Application.Features.Commands.CreateProduct;
+using ETicaretAPI.Application.Features.Queries.GetAllProduct;
 using ETicaretAPI.Application.Repositories;
 using ETicaretAPI.Application.RequestParameters;
 using ETicaretAPI.Application.ViewModels.Products;
 using ETicaretAPI.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ETicaretAPI.API.Controllers
@@ -20,7 +23,12 @@ namespace ETicaretAPI.API.Controllers
         readonly IProductImageFileWriteRepository _productImageFileWriteRepository;
         readonly IStorageService _storageService;
 
-        public ProductController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IWebHostEnvironment webHostEnvironment, IFileWriteRepository fileWriteRepository, IFileReadRepository fileReadRepository, IProductImageFileReadRepository productImageFileReadRepository, IProductImageFileWriteRepository productImageFileWriteRepository, IStorageService storageService)
+
+
+
+        readonly IMediator _meadiator;
+
+        public ProductController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IWebHostEnvironment webHostEnvironment, IFileWriteRepository fileWriteRepository, IFileReadRepository fileReadRepository, IProductImageFileReadRepository productImageFileReadRepository, IProductImageFileWriteRepository productImageFileWriteRepository, IStorageService storageService, IMediator meadiator)
         {
             _productReadRepository = productReadRepository;
             _productWriteRepository = productWriteRepository;
@@ -30,17 +38,15 @@ namespace ETicaretAPI.API.Controllers
             _productImageFileReadRepository = productImageFileReadRepository;
             _productImageFileWriteRepository = productImageFileWriteRepository;
             _storageService = storageService;
+            _meadiator = meadiator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]Pagination pagination)
+        //Buraya yapılacak olan istekler Requset tipli parametre ile karşılanmaktadır.
+        public async Task<IActionResult> Get([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
         {
-            var totalCount = _productReadRepository.GetAll().Count();
-            var products = _productReadRepository.GetAll().Skip(pagination.Size * pagination.Page).Take(pagination.Size);
-            return Ok(new { 
-                products,
-                totalCount,
-            });
+            GetAllProductQueryResponse response = await _meadiator.Send(getAllProductQueryRequest);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
@@ -50,15 +56,9 @@ namespace ETicaretAPI.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(VM_Create_Product model)
+        public async Task<IActionResult> Post(CreateProductCommandRequest createProductCommandRequest)
         {
-            await _productWriteRepository.AddAsync(new() {
-                Name = model.Name,
-                Price = model.Price,
-                Stock = model.Stock
-
-            });
-            await _productWriteRepository.SaveAsync();
+            CreateProductCommandResponse response = await _meadiator.Send(createProductCommandRequest);
             return Ok();
         }
 

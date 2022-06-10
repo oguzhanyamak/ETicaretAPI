@@ -13,6 +13,8 @@ Presentation katmaný verilerin sistemden çýkýþ yaptýðý katmandýr
 Presentation katmaný üzerinde verileri transferleri için IoC konteyner yapýsý ile etkiliþim saðlanmýþtýr.
 Infrastructure\Persistence  katmaný üzerinde tanýmlanan ServiceRegistration dosyasýnda IoC konteynerýna gerekli atamalar gerçekleþtiriliyor.
 Burada IProductService nesnesine gelen istek üzerine IoC konteynerýndan ProductServis nesnesine dönmesiyle birlikte eriþim somut olan iþleme eriþim saðlanmaktadýr.
+https://miro.com/app/board/uXjVO_t6z3A=/?share_link_id=367473087063
+----------------------------------------------------------------
 EP 2 :
 Proje dahilinde CodeFirst yaklaþýmý benimsenmiþ olup Buna uygun tanýmlar yapýlmýdý.
 Core\Domain\Entities yolunda veri tabaný entity nesnelerimiz tanýmlanmýdý. Ayný zamanda BaseEntity yaratýlarak nesnelerin ortak özellikleri kalýtým almasý saðlanmýþtýr.
@@ -23,6 +25,7 @@ Reflection ile veri tabaný tablolarýmýz ve iliþkileri oluþturuldu.
 Microsoft.EntityFrameworkCore.Desing (StartUp Projesine dahil edilir. Migration ve Reflectio için gereklidir.)
 Npsql.EntityFrameworkCore.PostgreSql (Persistence katmanýnda DbContext nesnesi için gerekli dönüþüm ve ayarlamalar için provider görevi görür.)
 EntityFrameworkCore.Tools (Persistence & Apllication katmanýna EntityFrameWork üzerinde çalýþmak için eklenmiþtir).
+----------------------------------------------------------------
 EP 3 :
 Repository Desin pattern'da önce arayüzler(soyut/Application) ardýndan concrete(somutu/Persistence) oluþturulur.
 Genel yapýlanmada Irepository yapýsý "Solid" prensiplerine aykýrý olduðu genel olarak savunulmaktadýr.
@@ -30,6 +33,7 @@ Sebep olarak Veri tabaný iþlemleri her ne kadar tek bir yapý üzerinde çalýþsada,
 Solid kurallarýna uymasý amacýyla bunlarý Okuma ve Yazma iþlemleri olarak bölebiliriz bu sayede prensip olarak iþlemleri gruplamýþ oluruz.
 Gerekli repository'ler oluþturturuldu ve IoC konteyner'e gerekli þekilde bildirilmiþtir.
 kontrol amaçlý Product Controller Api üzerinden veri tabanýna veri ekleme iþlemi yapýlmýþtýr.
+----------------------------------------------------------------
 EP 4 :
 Ef Core Tracking
 Bu sýnýfýn görevi; DbContext kullanýlarak alýnan bütün objeleri kapsamýnýn (scope) dýþýna çýkýncaya kadar izlemektir.
@@ -40,10 +44,12 @@ Sonuçlarýn read-only olduðu senaryolarda, daha açmak gerekirse, veritabanýnda hi
 Çünkü herhangi bir deðiþiklik olmadýðý için daha hýzlý sonuç verecektir.
 Bundan dolayý veritabanýndan aldýðýnýz bir veriyi güncellemeniz gerekmiyorsa, izleme gerektirmeyen bir sorgu kullanmanýz performans açýsýndan da daha faydalý olacaktýr.
 Bu bilgiler ýþýðýnda Projede bulunan ReadRepository genelinde sadece okuma iþlemi yapýldýðýndan Tracking iþlemi kapatýlarak optimizasyon saðlandý.
+----------------------------------------------------------------
 EP 5 :
 Bu bölümde global ortak deðiþkenleri tanýmlama esnasýnda deðilde veri tabanýna eklemne esnasýnda atama iþlemi için Interceptor iþlemi
 uygulanmýþtýr.Bunun için SaveChanges methodu DbContext sýnýfýnda override edilerek araya girip gerekli atamalarý yapýp ardýndan
 SaveChanges methodu ile gerekli yansýtma iþleminin yapýlmasý saðlanmýþtýr.
+----------------------------------------------------------------
 EP 6 :
 Geliþtirilen uygulamalarda client olarak Browser kullanýldýðý durumda CORS politikalarý devreye girmektedir.
 Same Origin Policy (SOP)
@@ -52,11 +58,13 @@ Tarayýcýlar tarafýndan, geliþtirilen bir güvenlik mekanizmasýdýr. sadece ayný or
 Eðer, SOP kýsýtlamasý olmasaydý, zararlý bir sayfayý ziyaret ettiðimizde, o an oturumumuzun açýk olduðu bir sayfadaki bilgilerimizin okunabilmesine izin verilecekti.
 Uygulamalarýn, farklý originler (alt alan adlarý veya üçüncü taraf kaynaklar) ile etkiletiþime geçme ihtiyacý nedeniyle CORS, SOP’un getirmiþ olduðu katý kurallarý, 
 kontrollü bir þekilde hafifletmek için kullanýlmaktadýr.
+----------------------------------------------------------------
 EP 7: 
 Product Controller'ýn düzenlenmesi.
 Dýþ dünyadan gelen verilerin karþýlanmasý için ViewModel'lar oluþturulmuþtur.CORE/APPLICATION/ViewModewls
 Dýþ dünyadan gelen veriler Entity ile karþýlanmamalýdýr.
 Api istekleri için product controller'ýn düzenlenmesi
+----------------------------------------------------------------
 EP 8 :
 Fluent Validation ile validasyon iþlemlerinin yapýlmasý.
 Validasyon iþlemler  mümkün mertebe her boyutta yapýlmalýdýr.(Client/Backend/Database)
@@ -66,6 +74,7 @@ Fluent Validation için Application katmanýna FluentValidation paketinin yüklenme
 Oluþturulan validatorlar uygulamanýn sunum katmanýna bildirilir. [Presentation/ETicaretAPI.API/Program.cs]
 { ConfigureApiBehaviorOptions(options=> options.SuppressModelStateInvalidFilter=true) } ile varsayýlan filteler devre dýþý býrakýlýr. 
 { options => options.Filters.Add<ValidationFilter>() } ile özel filtre tanýmý yapýlabilir. Özel filtre bir middleware dýr.
+----------------------------------------------------------------
 EP 9 :
 Dosya yükleme iþlemleri için öncelikle Application katmanýnda IFileService arayüzü(soyut) oluþturularak ön tanýmlar oluþturulmuþtur.
 Ardýndan oluþturulan sýnýfýn concreate(somut) nesnesi Infrastructure da tanýmlanmýþtýr.
@@ -94,3 +103,25 @@ FileRename IStorage interface de tanýmlamak mantýklý deðildir çünkü bu interface
 ayrý ayrý tanýmlanmasý gerekmektedir ama bu çalýþmada FileRename her Storage türü için ortak olduðundan buna gerek yoktur.
 Bu nedenle Storage ana sýnýfý içerisinde tanýmlanýp diðer storage türlerine kalýtým yoluyla aktarmak daha mantýklý olacaktýr.
 ----------------------------------------------------------------
+EP 12:
+CQRS Pattern (Command Query Responsibility Segregation):
+Veri üzerinde manipulasyon yapmamýzý saðlayan yapýlardýr komutlar(command).
+Veri üzerinde manipulasyon yapmayýp sadece okuyan,listeleyen ve raporlayan veya istatistiksel sonuç elde etmemizi saðlayan sorgulardýr(query).
+Yapýlan uygulamada, yapýlan command ve query lerin ayrýþtýrýlmasýný temel almýþtýr.
+Bu yapýyý salt bir þekilde yapmak mümkündür ama bunun yapýlmasý ciddi þekilde maliyetlidir.Bu maliyetlerden kaçýnmak için Mediator Pattern kullanýlmaktadýr.
+Mediator Pattern kullanmak için MediatR kütüphanesi tasarlanmýþtýr.
+Temeli CQS(Command Query Seperate)'e dayanmaktadýr.
+Avantajlarý:
+	ölçeklenebilirlik(scalability)
+	performans(performans)
+	sadelik(simplicity)
+	Etkili Takým Çalýþmasý(Effective TeamWork)
+https://miro.com/app/board/uXjVOuCJOog=/?share_link_id=320806153421
+Application katmaný üzerinde iþleyecek bu yapý için Application katmanýna MediatR Ve MediatR DependencyInjection paketleri dahil edilir.
+Application/Features yolunda CQRS ile ilgili command ve Query yapýlanmasý bulunacaktýr.
+MediatR kütüphanesi yapýlarý ayýrt etmek için yapýlar üzerinde implemente iþlemleri yapmak gerekmektedir.
+Request sýnýfý IRequest<ResponseSýnýfý> interface implemente edmesi gerekmektedir.
+Handler sýnýfý ayný þekilde IRequestHandler<RequestSýnýfý,ResponseSýnýfý> interface implemente etmelidir.
+Handler sýnýfýnda iþlem yapýlýrken Infrastructure katmanýnda bulunan Repolara eriþim saðlanamadýðýndan iþlemler Application katmanýnda bulunan interfaceler üzerinden 
+	IoC yardýmýyla yapýlmaktadýr.
+----------------------------------------------------------------------
