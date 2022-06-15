@@ -125,3 +125,17 @@ Handler sýnýfý ayný þekilde IRequestHandler<RequestSýnýfý,ResponseSýnýfý> interf
 Handler sýnýfýnda iþlem yapýlýrken Infrastructure katmanýnda bulunan Repolara eriþim saðlanamadýðýndan iþlemler Application katmanýnda bulunan interfaceler üzerinden 
 	IoC yardýmýyla yapýlmaktadýr.
 ----------------------------------------------------------------------
+Asp.NET Core Identity
+Bir mimaride kullanýcýlarýn iki farklý özellikleri vardýr 
+Proje içerisinde Identity mekanizmasýný kullanabilmek için projeye(Domain)
+	Microsoft.AspNetCore.Identity 
+	Microsoft.AspNetCore.Identity.EntityFrameWorkCore 
+paketleri dahil edilir.
+Identity mekanizmasý User ve Role için bir tablo yapýlanmasý oluþturacak, bunun context nesnesinde bildirilmesi gerekmetedir.
+Bildirme iþlemi de Önceden DbContext sýnýfýndan kalýtým alan contenxt sýnýfýný IdentityDbContext sýnýfýndan kalýtým aldýrarak bildirme iþlemi yapýlýr.
+ardýndan persistence/ service reg. da tekrar bir bildirme iþlemi yapýlýr.
+Entity iþlemleri için genel anlamda repository yaklaþýmý ile iþlemler gerçekleþmektedir.
+Identity mekanizmasý kendisine has olan sýnýflar için kullanýlmak üzere kendi servislerini içinde barýndýrmakta.
+Kullanýcý iþlemleri UsersController üzerinden yürütülecektir.
+UserManager servisi, user iþlemlerinin yapýlmasýný saðlayan ön tanýmlý servistir.
+servis üzerinden yapýlan iþlemler IdentityResult olarak döner.
