@@ -13,6 +13,11 @@ namespace ETicaretAPI.Application.Features.Commands.AppUser.CreateUser
     {
 
         readonly UserManager<ETicaretAPI.Domain.Entities.Identity.AppUser> _userManager;
+
+        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
             IdentityResult result = await _userManager.CreateAsync(new()

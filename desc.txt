@@ -116,7 +116,6 @@ Avantajlarý:
 	performans(performans)
 	sadelik(simplicity)
 	Etkili Takým Çalýþmasý(Effective TeamWork)
-https://miro.com/app/board/uXjVOuCJOog=/?share_link_id=320806153421
 Application katmaný üzerinde iþleyecek bu yapý için Application katmanýna MediatR Ve MediatR DependencyInjection paketleri dahil edilir.
 Application/Features yolunda CQRS ile ilgili command ve Query yapýlanmasý bulunacaktýr.
 MediatR kütüphanesi yapýlarý ayýrt etmek için yapýlar üzerinde implemente iþlemleri yapmak gerekmektedir.
@@ -124,7 +123,9 @@ Request sýnýfý IRequest<ResponseSýnýfý> interface implemente edmesi gerekmektedi
 Handler sýnýfý ayný þekilde IRequestHandler<RequestSýnýfý,ResponseSýnýfý> interface implemente etmelidir.
 Handler sýnýfýnda iþlem yapýlýrken Infrastructure katmanýnda bulunan Repolara eriþim saðlanamadýðýndan iþlemler Application katmanýnda bulunan interfaceler üzerinden 
 	IoC yardýmýyla yapýlmaktadýr.
+https://miro.com/app/board/uXjVOuCJOog=/?share_link_id=320806153421
 ----------------------------------------------------------------------
+EP 13:
 Asp.NET Core Identity
 Bir mimaride kullanýcýlarýn iki farklý özellikleri vardýr 
 Proje içerisinde Identity mekanizmasýný kullanabilmek için projeye(Domain)
@@ -139,3 +140,12 @@ Identity mekanizmasý kendisine has olan sýnýflar için kullanýlmak üzere kendi se
 Kullanýcý iþlemleri UsersController üzerinden yürütülecektir.
 UserManager servisi, user iþlemlerinin yapýlmasýný saðlayan ön tanýmlý servistir.
 servis üzerinden yapýlan iþlemler IdentityResult olarak döner.
+----------------------------------------------------------------------
+EP 13.5:
+Authentication : Kullanýcý/Kimlik doðrulama. Uygulama tarafýndan kullanýcýnýn tanýmlanmasýdýr.
+Authorization : Kimliði doðrulanmýþ kullanýcýlarýn yetkilerini ifade etmektedir.
+Giriþ iþlemi için gerekli altyapý mediator ile hazýrlandý. Authentication yapýsý aktif hale getirildi.
+Giriþ iþlemi için handler özelinde gelen bilgilerin sistemde kayýtlý olup olmadýðýný kontrol etmek gerekmektedir.
+buradaki iþlemler UserManager ve SignInManager üzerinden yürümektedir.
+
+---------------------------------------------------------------------
