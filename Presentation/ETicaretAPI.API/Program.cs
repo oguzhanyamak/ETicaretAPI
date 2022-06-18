@@ -23,6 +23,7 @@ builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+<<<<<<< HEAD
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer("Admin", options => //Authentication middleware çaðýrma iþlemi
 {
     //Bu uygulamaya token üzerinden istek geliyorsa bu token'a ait tür ve içerik bilgisi tanýmlanýr (doðrulamada kullanýlacak olan içerikler)
@@ -44,6 +45,46 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 }); //Schema adý
 
 
+||||||| constructed merge base
+=======
+<<<<<<< Updated upstream
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer("Admin", options => //Authentication middleware çaðýrma iþlemi
+=======
+<<<<<<< HEAD
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer("Admin", options =>
+=======
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer("Admin", options => //Authentication middleware çaðýrma iþlemi
+>>>>>>> 65b9b00 (Authorize AltyapÄ±sÄ± HazÄ±rlandÄ±)
+>>>>>>> Stashed changes
+{
+    //Bu uygulamaya token üzerinden istek geliyorsa bu token'a ait tür ve içerik bilgisi tanýmlanýr (doðrulamada kullanýlacak olan içerikler)
+    options.TokenValidationParameters = new()
+    {
+        ValidateAudience = true, //Oluþturulacak olan token deðerini kimlerin kullanacaðý bilgisini barýndýrýr
+        ValidateIssuer = true, // Oluþacak token deðerini kimin daðýttýný ifade edeceði alandýr
+        ValidateLifetime = true,//Oluþturulan token deðerinin süresini kontrol edecek alandýr
+        ValidateIssuerSigningKey = true, //Üretilecek olan token deðerinin uygulamaya ait bir deðer olduðunu ifade eden security key verisinin doðrulanmasýdýr.
+<<<<<<< Updated upstream
+        //yukarýda bool olarak iþaretlenen noktalar  gelen tokenlerde kontrol edilecek noktalardýr
+
+=======
+<<<<<<< HEAD
+=======
+        //yukarýda bool olarak iþaretlenen noktalar  gelen tokenlerde kontrol edilecek noktalardýr
+
+>>>>>>> 65b9b00 (Authorize AltyapÄ±sÄ± HazÄ±rlandÄ±)
+>>>>>>> Stashed changes
+
+        ValidAudience = builder.Configuration["Token:Audience"],
+        ValidIssuer = builder.Configuration["Token:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"]))
+
+        
+    };
+}); //Schema adý
+
+
+>>>>>>> Authorize AltyapÄ±sÄ± HazÄ±rlandÄ±
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

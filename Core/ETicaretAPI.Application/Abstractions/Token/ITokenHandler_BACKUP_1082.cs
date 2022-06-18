@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ETicaretAPI.Application.Abstractions.Token
-{
-    public interface ITokenHandler
-    {
-        ETicaretAPI.Application.DTOs.Token CreateAccessToken(int minute = 5); //token üretiminden sorumlu imza
-    }
-}
-||||||| constructed merge base
-=======
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,4 +19,3 @@ namespace ETicaretAPI.Application.Abstractions.Token
 >>>>>>> Stashed changes
     }
 }
->>>>>>> Authorize Altyapısı Hazırlandı
