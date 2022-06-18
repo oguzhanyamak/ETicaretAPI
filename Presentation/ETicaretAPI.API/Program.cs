@@ -5,6 +5,9 @@ using ETicaretAPI.Infrastructure.Filters;
 using ETicaretAPI.Infrastructure.Services.Storage.Local;
 using ETicaretAPI.Persistence;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceServices(); // IoC Container
@@ -20,6 +23,27 @@ builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer("Admin", options => //Authentication middleware çaðýrma iþlemi
+{
+    //Bu uygulamaya token üzerinden istek geliyorsa bu token'a ait tür ve içerik bilgisi tanýmlanýr (doðrulamada kullanýlacak olan içerikler)
+    options.TokenValidationParameters = new()
+    {
+        ValidateAudience = true, //Oluþturulacak olan token deðerini kimlerin kullanacaðý bilgisini barýndýrýr
+        ValidateIssuer = true, // Oluþacak token deðerini kimin daðýttýný ifade edeceði alandýr
+        ValidateLifetime = true,//Oluþturulan token deðerinin süresini kontrol edecek alandýr
+        ValidateIssuerSigningKey = true, //Üretilecek olan token deðerinin uygulamaya ait bir deðer olduðunu ifade eden security key verisinin doðrulanmasýdýr.
+        //yukarýda bool olarak iþaretlenen noktalar  gelen tokenlerde kontrol edilecek noktalardýr
+
+
+        ValidAudience = builder.Configuration["Token:Audience"],
+        ValidIssuer = builder.Configuration["Token:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"]))
+
+        
+    };
+}); //Schema adý
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +58,7 @@ app.UseStaticFiles();
 app.UseCors();
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

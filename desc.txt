@@ -142,10 +142,29 @@ UserManager servisi, user iþlemlerinin yapýlmasýný saðlayan ön tanýmlý servistir
 servis üzerinden yapýlan iþlemler IdentityResult olarak döner.
 ----------------------------------------------------------------------
 EP 13.5:
+Login iþlemi için gelen isteðe karþýlýk request/response/handler sýnflarý oluþturulmuþtur.
 Authentication : Kullanýcý/Kimlik doðrulama. Uygulama tarafýndan kullanýcýnýn tanýmlanmasýdýr.
 Authorization : Kimliði doðrulanmýþ kullanýcýlarýn yetkilerini ifade etmektedir.
 Giriþ iþlemi için gerekli altyapý mediator ile hazýrlandý. Authentication yapýsý aktif hale getirildi.
 Giriþ iþlemi için handler özelinde gelen bilgilerin sistemde kayýtlý olup olmadýðýný kontrol etmek gerekmektedir.
 buradaki iþlemler UserManager ve SignInManager üzerinden yürümektedir.
-
+userManager ile girilen bilgi doðrultusunda kiþi bulunur (bulunmadýðý durumda hata döndürülür.)
+signInManager ilede bulunan kullanýcý ve gönderilen þifrenin doðrulanma iþlemi yapýlýr.
+Doðrulama iþlemi baþarýlý olurduðu durumda Yetkilendirme iþlemi yapýlýr.
 ---------------------------------------------------------------------
+EP 14:
+JWT :
+https://datatracker.ietf.org/doc/html/rfc7519 [ietf]
+Json Web Token , Http protokolü stateless bir protokol olduðu için giden response ve requestlerin bilinen bir yerden geldiðini doðrulamak için kullanýlan bir yöntemdir.
+JWT Token 3 parçadan oluþur : Header / Payload / Signature dýr.
+Header : {  "alg": "HS256",  "typ": "JWT" } Token tipi, ve algoritma
+Payload : Kullanýlmasý zorunlu deðildir fakat önerilir.Bunlardan bazýlarý: iss (issuer) (yayýnlayýcý), exp(expiration time) (son kullaným zamaný), sub (subject) (konu), aud (audience) (hedef kitle) ve diðerleridir.
+Signature : Signature kýsmýnýn oluþturulabilmesi için base64 ile kodlanmýþ header, base64 ile kodlanmýþ payload, gizli bir kelime (secret) ve header’da tanýmlanan algoritma gereklidir.
+.Net Core tarafýnda kullanabilmek için AspNetCore.Authentication.JwtBearer Paketi gerekmektedir.(Api katmaný/Infrastructure)
+Authorization iþlemini JWT teknolojisi ile gereken iþlemler yapýlmýþtýr.
+Yetkilendirme iþleminde Token yardýmcý aracý ile yetkilendirme iþlemi gerçekleþtirmektedir.
+Tokenlarýn geçerlilik süreleri vardýr.
+Tokenlar belirli yetkileri içerirler.
+Bir token oluþumu sýrasýnda bu iþlemi yapacak olan bir servise ihtiyaç olmaktadýr.
+Token oluþturma iþleminin ardýndan oluþturulacak tokeni doðrulayacak ayrý bir servis gerekmektedir.
+Microsoft.AspNetCore.Authentication.JwtBearer paketi sunum katmanýna eklenir (Api)
