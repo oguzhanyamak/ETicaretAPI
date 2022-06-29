@@ -167,4 +167,13 @@ Tokenlarýn geçerlilik süreleri vardýr.
 Tokenlar belirli yetkileri içerirler.
 Bir token oluþumu sýrasýnda bu iþlemi yapacak olan bir servise ihtiyaç olmaktadýr.
 Token oluþturma iþleminin ardýndan oluþturulacak tokeni doðrulayacak ayrý bir servis gerekmektedir.
-Microsoft.AspNetCore.Authentication.JwtBearer paketi sunum katmanýna eklenir (Api)
+Microsoft.AspNetCore.Authentication.JwtBearer paketi sunum katmanýna eklenir (Api) 
+-------------------------------------------------------------------------------------------------------
+EP 15:
+Google login iþlemi için yapýlacak istekleri karþýlayacak request,response ve handler yapýlarý oluþturulmuþtur.
+Frontend kýsmýnda elde edilen deðerleri backend de karþýlayacak request modeli oluþturulmuþtur.
+Backend kýsmýnda google doðrulama iþlemi için Google.Apis.Auth paketi application'a eklenmiþtir.
+"" Application katmanýna paketlerin doðrudan eklenmesi esasýnda yanlýþ bir kullanýmdýr. Paketlerin doðrudan eklenmesi baðýmlýlýklarý artýrmaktadýr. Esasýnda 
+Application katmaný  mümkün olduðunca baðýmsýz olmalýdýr. Paket baðýmlýlýklarý duruma göre ýnfrastructure da tanýmlaným application'a interfaceler aracýlýðýyla dahil edilmelidir.""
+kullanýcý kayýtlý deðil ise , AspNetUsers tablosu ve AspNetUserLogins tablosuna kayýt edilir. AspNetUserLogins tablosu dýþ kaynaktan giriþ yapanlarýn tutulduðu tablodur.
+kayýt iþlemi sonrasýnda kullanýcýya bir token geri dönecektir.
