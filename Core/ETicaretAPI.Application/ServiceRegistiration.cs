@@ -13,7 +13,7 @@ namespace ETicaretAPI.Application
         public static void AddApplicationServices(this IServiceCollection collection)
         {
             collection.AddMediatR(typeof(ServiceRegistiration));
-
+            collection.AddHttpClient();
             //ServiceRegistiration'ın bulunduğu assembly deki tüm handler sınıflarını içeri aktarır
         }
     }

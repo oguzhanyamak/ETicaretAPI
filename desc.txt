@@ -177,3 +177,8 @@ Backend kýsmýnda google doðrulama iþlemi için Google.Apis.Auth paketi applicatio
 Application katmaný  mümkün olduðunca baðýmsýz olmalýdýr. Paket baðýmlýlýklarý duruma göre ýnfrastructure da tanýmlaným application'a interfaceler aracýlýðýyla dahil edilmelidir.""
 kullanýcý kayýtlý deðil ise , AspNetUsers tablosu ve AspNetUserLogins tablosuna kayýt edilir. AspNetUserLogins tablosu dýþ kaynaktan giriþ yapanlarýn tutulduðu tablodur.
 kayýt iþlemi sonrasýnda kullanýcýya bir token geri dönecektir.
+-------------------------------------------------------------------------------------------------------
+EP 16:
+Facebook login iþlemi için yapýlacak istekleri karþýlayacak request,response ve handler yapýlarý oluþturulmuþtur.
+Frontend kýsmýnda elde edilen deðerleri backend de karþýlayacak request modeli oluþturulmuþtur.
+https://developers.facebook.com/docs/facebook-login/guides/access-tokens
