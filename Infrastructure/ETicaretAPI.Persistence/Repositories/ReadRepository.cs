@@ -22,24 +22,45 @@ namespace ETicaretAPI.Persistence.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public IQueryable<T> GetAll()
+        public IQueryable<T> GetAll(bool changeTracking = true)
         {
-            return Table;
+            var query = Table.AsQueryable();
+            if (!changeTracking) 
+            { 
+                return query.AsNoTracking(); 
+            }
+
+            return query;
         }
 
-        public T GetById(string Id)
+        public T GetById(string Id, bool changeTracking = true)
         {
-            return Table.Find(Guid.Parse(Id));
+            if (!changeTracking)
+            {
+                return Table.AsQueryable().AsNoTracking().FirstOrDefault(p=> p.Id == Guid.Parse(Id));
+            }
+           return Table.Find(Guid.Parse(Id));
         }
 
-        public T GetSingle(Expression<Func<T, bool>> method)
+        public T GetSingle(Expression<Func<T, bool>> method, bool changeTracking = true)
         {
+            if (!changeTracking)
+            {
+                return Table.AsQueryable().AsNoTracking().FirstOrDefault(method);
+            }
             return Table.FirstOrDefault(method);
+
+            
         }
 
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method)
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool changeTracking = true)
         {
-            return Table.Where(method);
+            var query = Table.Where(method);
+            if (!changeTracking)
+            {
+                return query.AsNoTracking();
+            }
+            return query;
         }
     }
 }

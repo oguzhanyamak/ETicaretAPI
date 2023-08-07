@@ -10,7 +10,7 @@ namespace ETicaretAPI.Application.Repositories
 {
     public interface IAsyncReadRepository<T> : IRepository<T> where T : BaseEntity
     {
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> method);
-        Task<T> GetByIdAsync(string Id);
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool changeTracking = true);
+        Task<T> GetByIdAsync(string Id, bool changeTracking = true);
     }
 }

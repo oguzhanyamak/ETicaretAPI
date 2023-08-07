@@ -21,13 +21,21 @@ namespace ETicaretAPI.Persistence.Repositories
         }
         public DbSet<T> Table => _context.Set<T>();
 
-        public async Task<T> GetByIdAsync(string Id)
+        public async Task<T> GetByIdAsync(string Id, bool changeTracking = true)
         {
+            if (!changeTracking)
+            {
+                return await Table.AsQueryable().AsNoTracking().FirstOrDefaultAsync(p => p.Id == Guid.Parse(Id));
+            }
             return await Table.FindAsync(Guid.Parse(Id));
         }
 
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method)
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool changeTracking = true)
         {
+            if (!changeTracking)
+            {
+                return await Table.AsQueryable().AsNoTracking().FirstOrDefaultAsync(method);
+            }
             return await Table.FirstOrDefaultAsync(method);
         }
     }

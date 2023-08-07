@@ -11,9 +11,9 @@ namespace ETicaretAPI.Application.Repositories
 {
     public interface IReadRepository<T> : IRepository<T> where T : BaseEntity
     {
-        IQueryable<T> GetAll();
-        IQueryable<T> GetWhere(Expression<Func<T,bool>> method);
-        T GetSingle(Expression<Func<T, bool>> method);
-        T GetById(string Id);
+        IQueryable<T> GetAll(bool changeTracking = true);
+        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool changeTracking = true);
+        T GetSingle(Expression<Func<T, bool>> method, bool changeTracking = true);
+        T GetById(string Id, bool changeTracking = true);
     }
 }

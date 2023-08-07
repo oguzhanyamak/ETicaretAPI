@@ -9,5 +9,6 @@ namespace ETicaretAPI.Application.Repositories
 {
     public interface IOrderAsyncWriteRepository : IAsyncWriteRepository<Order>
     {
+
     }
 }
