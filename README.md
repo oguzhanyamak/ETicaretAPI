@@ -12,20 +12,21 @@
 		* Mapping
 		* Validators
 		* CQRS Pattern
-		* Servis Arayüzleri [ IRepository ]
+		* Servis Arayï¿½zleri [ IRepository ]
 * Infrastructure
 	* Infrastructure
-		* Veritabaný dýþýndaki operasyonlarý / servisleri / iþlemleri yürütüldüðü katmandýr.	
-		* E-mail
-		* Sms
-		* Notification
-		* Payment
 	* Persistence
-		* Veritabaný operasyonlarý
-		* Application altýnda bulunan servis arayüzlerinin gerçeklendiði alandýr
+		*  VeritabanÄ± operasyonlarï¿½
+		* Application altï¿½nda bulunan servis arayï¿½zlerinin gerï¿½eklendiï¿½i alandï¿½r
 		* DbContext
 		* Migrations
 		* Configurations
 		* Seeding
 * Presentation 
-	* Kullanýcý eriþim katmanýdýr
+	* Kullanici eriÅŸim katmanidir
+
+
+ ## Async Ã¶zelliÄŸi olmayan metotlar iÃ§in
+> await Task.Run(() => Table.Update(data)); 
+>
+> await Task.Run(() => Table.Remove(model));
