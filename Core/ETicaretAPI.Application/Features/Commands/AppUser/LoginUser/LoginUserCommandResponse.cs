@@ -11,7 +11,7 @@ namespace ETicaretAPI.Application.Features.Commands.AppUser.LoginUser
     public class LoginUserCommandResponse
     {
         public bool Succeded { get; set; }
-        public String Message { get; set; }
+        public string Message { get; set; }
     }
 
 

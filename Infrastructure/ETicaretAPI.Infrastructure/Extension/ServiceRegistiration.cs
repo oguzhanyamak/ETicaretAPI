@@ -1,4 +1,6 @@
-﻿using ETicaretAPI.Application.Abstraction.Token;
+﻿using ETicaretAPI.Application.Abstraction.GoogleAuth;
+using ETicaretAPI.Application.Abstraction.Token;
+using ETicaretAPI.Infrastructure.Services.GoogleAuth;
 using ETicaretAPI.Infrastructure.Services.Token;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +16,7 @@ namespace ETicaretAPI.Infrastructure.Extension
         public static void AddInfrastructureServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<ITokenHandler, TokenHandler>();
+            serviceCollection.AddScoped<IGoogleAuth, GoogleAuthService>();
         }
     }
 }

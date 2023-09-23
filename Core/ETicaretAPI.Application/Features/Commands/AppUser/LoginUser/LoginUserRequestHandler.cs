@@ -26,22 +26,24 @@ namespace ETicaretAPI.Application.Features.Commands.AppUser.LoginUser
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
             Domain.Entities.Identity.AppUser user = await _userManager.FindByEmailAsync(request.Email);
+
             if (user == null)
             {
                 return new LoginUserErrorCommandResponse() { Succeded = false, Message = "Kullanıcı Adı Veya Şifre Hatalı" };
             }
-            SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password,false);
+            SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (result.Succeeded)
             {
+                IList<string> roles = await _userManager.GetRolesAsync(user);
                 Token token = _tokenHandler.CreateAccessToken(15);
-                return new LoginUserSuccessCommandResponse() { token = token ,Message="Başarılı",Succeded= result.Succeeded };
+                return new LoginUserSuccessCommandResponse() { token = token, Message = "Başarılı", Succeded = result.Succeeded };
             }
             else
             {
-                return new LoginUserErrorCommandResponse() { Succeded = result.Succeeded,Message = "Kullanıcı Adı Veya Şifre Hatalı"};
+                return new LoginUserErrorCommandResponse() { Succeded = result.Succeeded, Message = "Kullanıcı Adı Veya Şifre Hatalı" };
             }
-            
-            
+
+
         }
     }
 }
