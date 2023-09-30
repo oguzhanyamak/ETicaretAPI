@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace ETicaretAPI.Infrastructure.Services.Token
             _configuration = configuration;
         }
 
-        public TokenDTO CreateAccessToken(int minute)
+        public TokenDTO CreateAccessToken(int minute=15)
         {
 
             TokenDTO token = new TokenDTO();
@@ -44,9 +45,17 @@ namespace ETicaretAPI.Infrastructure.Services.Token
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
 
             token.AccessToken = handler.WriteToken(securityToken);
-
+            token.refToken = CreateRefreshToken();
 
             return token;
+        }
+
+        public string CreateRefreshToken(int minute = 5)
+        {
+            byte[] number = new byte[32];
+            using RandomNumberGenerator random = RandomNumberGenerator.Create();
+            random.GetBytes(number);
+            return Convert.ToBase64String(number);
         }
     }
 }

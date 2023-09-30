@@ -46,5 +46,13 @@ namespace ETicaretAPI.Persistence.Services
             }
             return response;
         }
+
+        public async Task UpdateRefreshToken(string refToken,AppUser user,DateTime AccessTokenEndDate)
+        {
+
+                user.RefreshToken = refToken;
+                user.RTEndDate = AccessTokenEndDate.AddMinutes(5);
+                await _userManager.UpdateAsync(user);
+        }
     }
 }

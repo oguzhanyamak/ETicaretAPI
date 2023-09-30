@@ -1,6 +1,7 @@
 ﻿using ETicaretAPI.Application.DTOs.Authentication;
 using ETicaretAPI.Application.Features.Commands.AppUser.GoogleLogin;
 using ETicaretAPI.Application.Features.Commands.AppUser.LoginUser;
+using ETicaretAPI.Application.Features.Commands.AppUser.RefreshTokenLogin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,6 @@ namespace ETicaretAPI.Application.Abstraction.Services
     public interface IInternalAuthService
     {
         Task<LoginUserCommandResponse> LoginAsync(string email,string password);
+        Task<LoginRefreshTokenCommandResponse> RefreshTokenLoginAsync(string refToken);
     }
 }

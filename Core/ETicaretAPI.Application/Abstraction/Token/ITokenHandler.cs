@@ -9,7 +9,8 @@ namespace ETicaretAPI.Application.Abstraction.Token
 {
     public interface ITokenHandler
     {
-        DTOs.Token CreateAccessToken(int minute);
+        DTOs.Token CreateAccessToken(int minute = 15);
+        string CreateRefreshToken(int minute);
 
     }
 }

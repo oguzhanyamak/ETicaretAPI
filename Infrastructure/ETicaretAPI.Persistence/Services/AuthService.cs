@@ -5,8 +5,11 @@ using ETicaretAPI.Application.DTOs;
 using ETicaretAPI.Application.DTOs.Authentication;
 using ETicaretAPI.Application.Features.Commands.AppUser.GoogleLogin;
 using ETicaretAPI.Application.Features.Commands.AppUser.LoginUser;
+using ETicaretAPI.Application.Features.Commands.AppUser.RefreshTokenLogin;
+using ETicaretAPI.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +24,15 @@ namespace ETicaretAPI.Persistence.Services
         private readonly IGoogleAuth _googleAuth;
         private readonly ITokenHandler _tokenHandler;
         private readonly SignInManager<Domain.Entities.Identity.AppUser> _signInManager;
+        private readonly IUserService _userService;
 
-        public AuthService(UserManager<Domain.Entities.Identity.AppUser> userManager, IGoogleAuth googleAuth, ITokenHandler tokenHandler, SignInManager<Domain.Entities.Identity.AppUser> signInManager)
+        public AuthService(UserManager<Domain.Entities.Identity.AppUser> userManager, IGoogleAuth googleAuth, ITokenHandler tokenHandler, SignInManager<Domain.Entities.Identity.AppUser> signInManager, IUserService userService)
         {
             _userManager = userManager;
             _googleAuth = googleAuth;
             _tokenHandler = tokenHandler;
             _signInManager = signInManager;
+            _userService = userService;
         }
 
 
@@ -55,6 +60,8 @@ namespace ETicaretAPI.Persistence.Services
                     {
                         await _userManager.AddLoginAsync(user, info);
                         Token token = _tokenHandler.CreateAccessToken(15);
+                        token.refToken = _tokenHandler.CreateRefreshToken(5);
+                        await _userService.UpdateRefreshToken(token.refToken, user, token.Expiration);
                         return new() { Message = "Kayıt Başarılı", Succeded = result.Succeeded, token = token };
                     }
                     else
@@ -87,12 +94,30 @@ namespace ETicaretAPI.Persistence.Services
             {
                 IList<string> roles = await _userManager.GetRolesAsync(user);
                 Token token = _tokenHandler.CreateAccessToken(15);
+                token.refToken = _tokenHandler.CreateRefreshToken(5);
+                await _userService.UpdateRefreshToken(token.refToken, user, token.Expiration);
                 return new LoginUserSuccessCommandResponse() { token = token, Message = "Başarılı", Succeded = result.Succeeded };
             }
             else
             {
                 return new LoginUserErrorCommandResponse() { Succeded = result.Succeeded, Message = "Kullanıcı Adı Veya Şifre Hatalı" };
             }
+        }
+
+        public async Task<LoginRefreshTokenCommandResponse> RefreshTokenLoginAsync(string refToken)
+        {
+            AppUser user  = await _userManager.Users.FirstOrDefaultAsync(x => x.RefreshToken == refToken);
+
+            if(user != null && user?.RTEndDate > DateTime.UtcNow)
+            {
+                Token token = _tokenHandler.CreateAccessToken();
+                
+                _userService.UpdateRefreshToken(token.refToken,user,token.Expiration);
+
+                return new LoginRefreshTokenCommandResponse() { token = token, Message = "Başarılı", Succeded = true };
+            }
+            else
+                return new LoginRefreshTokenCommandResponse() { Message = "Başarısız", Succeded = false };
         }
     }
 }
