@@ -9,7 +9,7 @@ namespace ETicaretAPI.API.Extensions
     static public class ExceptionHandler
     {
 
-        public static void ExceptionHandlerExtension(this WebApplication application)
+        public static void ExceptionHandlerExtension<T>(this WebApplication application,ILogger<T> logger)
         {
             application.UseExceptionHandler(builder =>
             {
@@ -20,7 +20,7 @@ namespace ETicaretAPI.API.Extensions
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (context != null)
                     {
-                        //logger.LogError(contextFeature.Error.Message);
+                        logger.LogError(contextFeature.Error.Message);
                         await context.Response.WriteAsJsonAsync(new
                         {
                             StatusCode = (int)context.Response.StatusCode,

@@ -59,7 +59,7 @@ namespace ETicaretAPI.Persistence.Services
                     if (result.Succeeded)
                     {
                         await _userManager.AddLoginAsync(user, info);
-                        Token token = _tokenHandler.CreateAccessToken(15);
+                        Token token = _tokenHandler.CreateAccessToken(user,15);
                         token.refToken = _tokenHandler.CreateRefreshToken(5);
                         await _userService.UpdateRefreshToken(token.refToken, user, token.Expiration);
                         return new() { Message = "Kayıt Başarılı", Succeded = result.Succeeded, token = token };
@@ -93,7 +93,7 @@ namespace ETicaretAPI.Persistence.Services
             if (result.Succeeded)
             {
                 IList<string> roles = await _userManager.GetRolesAsync(user);
-                Token token = _tokenHandler.CreateAccessToken(15);
+                Token token = _tokenHandler.CreateAccessToken(user,15);
                 token.refToken = _tokenHandler.CreateRefreshToken(5);
                 await _userService.UpdateRefreshToken(token.refToken, user, token.Expiration);
                 return new LoginUserSuccessCommandResponse() { token = token, Message = "Başarılı", Succeded = result.Succeeded };
@@ -110,7 +110,7 @@ namespace ETicaretAPI.Persistence.Services
 
             if(user != null && user?.RTEndDate > DateTime.UtcNow)
             {
-                Token token = _tokenHandler.CreateAccessToken();
+                Token token = _tokenHandler.CreateAccessToken(user);
                 
                 _userService.UpdateRefreshToken(token.refToken,user,token.Expiration);
 
