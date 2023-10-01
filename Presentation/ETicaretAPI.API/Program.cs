@@ -2,6 +2,7 @@ using ETicaretAPI.Application.Extension;
 using ETicaretAPI.Application.Validators.Products;
 using ETicaretAPI.Infrastructure.Filters;
 using ETicaretAPI.Persistence.Extension;
+using ETicaretAPI.SignalR.Extension;
 using ETicaretAPI.Infrastructure.Extension;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,15 +14,18 @@ using Serilog.Sinks.PostgreSQL;
 using ETicaretAPI.API.Configuration;
 using Serilog.Context;
 using Microsoft.AspNetCore.HttpLogging;
+using ETicaretAPI.SignalR.Hubs;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200")));
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "https://localhost:4200")));
 // Add services to the container.
 
 builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>()).AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>());//.ConfigureApiBehaviorOptions()
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddSignalRServices();
 
 builder.Host.UseSerilog(
     new LoggerConfiguration()
@@ -97,5 +101,5 @@ app.Use(async (context, next) =>
 });
 
 app.MapControllers();
-
+app.MapHubs();
 app.Run();
