@@ -3,6 +3,7 @@ using ETicaretAPI.Application.Features.Commands.Product.RemoveProduct;
 using ETicaretAPI.Application.Features.Commands.Product.UpdateProduct;
 using ETicaretAPI.Application.Features.Queries.Product.GetAllProduct;
 using ETicaretAPI.Application.Features.Queries.Product.GetByIdProduct;
+using ETicaretAPI.Application.Features.Queries.Product.GetByName;
 using ETicaretAPI.Application.Repositories;
 using ETicaretAPI.Domain.Entities;
 using MediatR;
@@ -14,7 +15,6 @@ namespace ETicaretAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -42,6 +42,13 @@ namespace ETicaretAPI.API.Controllers
             return Ok(response);
         }
 
+        [HttpGet("[action]/{ProdName}")]
+        public async Task<IActionResult> GetByName([FromRoute]GetProductsByNameRequest request)
+        {
+            GetProductsByNameResponse res = await _mediator.Send(request);
+            return Ok(res.Products);
+        }
+
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]UpdateProductCommandRequest request)
@@ -57,6 +64,7 @@ namespace ETicaretAPI.API.Controllers
             return Ok();
         }
 
+
         [HttpDelete]
         public async Task<IActionResult> Delete([FromQuery]RemoveProductCommandRequest request)
         {
@@ -64,15 +72,20 @@ namespace ETicaretAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("[action]")]
+        [HttpPut("[action]")]
         [DisableRequestSizeLimit]
-        public  async Task<IActionResult> Upload()
+        public async Task<IActionResult> Upload()
         {
 
-            string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "resource/productImages");
+            string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "resource\\productImages");
+            if(!Directory.Exists(uploadPath))
+                Directory.CreateDirectory(uploadPath);
             foreach(IFormFile file in Request.Form.Files)
             {
-                Console.WriteLine(file.FileName);
+                string fullPath = Path.Combine(uploadPath,$"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}" );
+                using FileStream fileStream = new(fullPath, FileMode.Create, FileAccess.Write, FileShare.None,1024*1024,useAsync:false);
+                await file.CopyToAsync(fileStream);
+                await fileStream.FlushAsync();
             }
             return Ok();
         }

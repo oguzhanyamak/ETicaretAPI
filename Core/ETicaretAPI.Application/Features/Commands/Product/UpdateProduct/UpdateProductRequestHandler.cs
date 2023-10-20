@@ -23,7 +23,7 @@ namespace ETicaretAPI.Application.Features.Commands.Product.UpdateProduct
             product.Name = request.Name;
             product.Price = request.Price;
             product.Stock = request.Stock;
-
+            product.IsActive = request.IsActive;
             await _writeRepository.Save();
             return new() { };
 

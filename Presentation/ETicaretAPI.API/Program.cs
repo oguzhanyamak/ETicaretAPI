@@ -30,6 +30,7 @@ builder.Services.AddSignalRServices();
 builder.Host.UseSerilog(
     new LoggerConfiguration()
     .WriteTo.File("logs/log.txt")
+    .WriteTo.Console()
     .WriteTo.Seq(builder.Configuration["Seq:ServerURL"])
     .WriteTo.PostgreSQL(builder.Configuration.GetConnectionString("PostgreSQL"), "logs", needAutoCreateTable: true,
     columnOptions: new Dictionary<string, ColumnWriterBase>
