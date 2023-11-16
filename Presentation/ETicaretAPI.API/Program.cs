@@ -16,8 +16,11 @@ using Serilog.Context;
 using Microsoft.AspNetCore.HttpLogging;
 using ETicaretAPI.SignalR.Hubs;
 using Microsoft.AspNetCore.Builder;
+using ETicaretAPI.Domain.Entities.Identity;
+using ETicaretAPI.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpContextAccessor();//client'tan gelen req oluþturulan httpcontext nesnesine katmanlardaki classlardan eriþmeye yarar
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "https://localhost:4200")));
 // Add services to the container.
 
@@ -60,7 +63,18 @@ builder.Services.AddHttpLogging(logging =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+
+
+//builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequesireConfirmedAccount = false).AddEntityFrameworkStores<ETicaretAPIDbContext>();
+
+builder.Services.AddAuthentication(options => { 
+
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+})
+    .AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new()
     {

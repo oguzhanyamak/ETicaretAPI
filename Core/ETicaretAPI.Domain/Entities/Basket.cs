@@ -1,4 +1,5 @@
 ﻿using ETicaretAPI.Domain.Entities.Common;
+using ETicaretAPI.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace ETicaretAPI.Domain.Entities
 {
-    public class Product : BaseEntity
+    public class Basket : BaseEntity
     {
-        public string Name { get; set; }
-        public int Stock { get; set; }
-        public long Price { get; set; }
-        public bool IsActive { get; set; } = true;
+        public string UserId { get; set; }
+        public AppUser  User { get; set; }
         public ICollection<BasketItem> BasketItems { get; set; }
+        public Order Order { get; set; }
+
     }
 }
