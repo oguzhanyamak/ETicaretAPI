@@ -12,7 +12,8 @@ namespace ETicaretAPI.Application.Abstraction.Services
 {
     public interface IAuthService : IExternalAuthService,IInternalAuthService
     {
-        
+        Task PasswordResetAsync(string email);
+        Task<bool> VerifyResetTokenAsync(string resetToken,string userId);
 
     }
 

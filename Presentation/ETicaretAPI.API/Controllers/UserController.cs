@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using ETicaretAPI.Application.Features.Commands.AppUser.UpdatePassword;
 
 namespace ETicaretAPI.API.Controllers
 {
@@ -27,6 +28,13 @@ namespace ETicaretAPI.API.Controllers
 
             CreateUserCommandResponse response = await _mediator.Send(request);
             return Ok(response);
+        }
+
+        [HttpPost("update-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody]UpdatePasswordCommandRequest request)
+        {
+            await _mediator.Send(request);
+            return Ok();
         }
 
     }

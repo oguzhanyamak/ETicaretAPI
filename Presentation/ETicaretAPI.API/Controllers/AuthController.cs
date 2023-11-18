@@ -1,6 +1,8 @@
 ﻿using ETicaretAPI.Application.Features.Commands.AppUser.GoogleLogin;
 using ETicaretAPI.Application.Features.Commands.AppUser.LoginUser;
+using ETicaretAPI.Application.Features.Commands.AppUser.PasswordReset;
 using ETicaretAPI.Application.Features.Commands.AppUser.RefreshTokenLogin;
+using ETicaretAPI.Application.Features.Commands.AppUser.VerifyResetToken;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,5 +54,20 @@ namespace ETicaretAPI.API.Controllers
                 return BadRequest(response);
             }
         }
+
+        [HttpPost("password-reset")]
+        public async Task<IActionResult> PasswordReset([FromBody]PasswordResetCommandRequest request)
+        {
+            await _mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpPost("verify-reset-token")]
+        public async Task<IActionResult> VerifyResetToken([FromBody] VerifyResetTokenCommandRequest request)
+        {
+            await _mediator.Send(request);
+            return Ok();
+        }
+
     }
 }

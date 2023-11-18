@@ -41,5 +41,19 @@ namespace ETicaretAPI.Infrastructure.Services
             await smtpClient.SendMailAsync(message);
 
         }
+
+        public async Task SendPasswordResetMailAsync(string to,string userId,string resetToken)
+        {
+            StringBuilder sb = new();
+            sb.AppendLine("Merhaba<br> Eğer yeni şifre talebinde bulunduysanız aşağıdaki linkten şifrenizi yenileyebilirsiniz.<br><br> <a style=\"display: inline-block; padding: 10px; background-color: green; color: white; text-decoration: none; border: none; cursor: pointer;\" target=\"_blank\" href=\"");
+            sb.AppendLine(configuration["WebClientUrl"]);
+            sb.AppendLine("/update-password/");
+            sb.AppendLine(userId); 
+            sb.AppendLine("/");
+            sb.AppendLine(resetToken);
+            sb.AppendLine("\">Şifre Sıfırla</a>");
+
+            await SendMailAsync(to, sb.ToString(), "Şifre Yenileme Talebi");
+        }
     }
 }
